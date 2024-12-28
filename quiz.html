@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ipl_2024</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #090909;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background: rgb(45, 51, 54);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .question {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: beige;
+        }
+        
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .options li {
+            margin: 10px 0;
+        }
+        
+        .options button {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            border: none;
+            background: #000000;
+            color: white;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .options button:hover {
+            background: #ffffff;
+            color: black;
+        }
+        
+        .result {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: white;
+        }
+        
+        .result span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="color: aliceblue; text-align:center">IPL 2024 Quiz</h1>
+        <div class="quiz">
+            <div class="question" id="question"><button onclick="start()">START</button></div>
+            <ul class="options" id="options">
+            </ul>
+        </div>
+        <div class="result" id="result" style="display: none;">
+            Your Score: <span id="score"></span>/10
+        </div>
+    </div>
+    <script>
+        const quizData = [{
+            question: "Who holds the orange cap in IPL 2024",
+            options: ["Virat Kohli", "Subhmana Gill", "Sanju Samson", "Sunil Narine"],
+            answer: 0
+        }, {
+            question: "Who holds the purple cap in IPL 2024",
+            options: ["Harshal Patel", "Jasprit Bhumra", "Varun Chakravarthi", "T.Natarajan"],
+            answer: 0
+        }, {
+            question: "Which team won the IPL 2024",
+            options: ["SRH", "KKR", "RCB", "RR"],
+            answer: 1
+        }, {
+            question: "Which team score the most runs in single inning in IPL 2024",
+            options: ["RCB", "PBKS", "SRH", "KKR"],
+            answer: 2
+        }, {
+            question: "Which team chased the highest IPL score ever",
+            options: ["RCB", "SRH", "LSG", "PBKS"],
+            answer: 3
+        }, {
+            question: "Who is the highest paid player in the IPL tournament",
+            options: ["Virat Kohli", "Pat Cummins", "Travis Head", "Glenn Maxwell"],
+            answer: 1
+        }, {
+            question: "Most trolled player in IPL 2024",
+            options: ["Sanju Samson", "Mohammad Siraj", "Hardhik Pandya", "Rohith Sharma"],
+            answer: 2
+        }, {
+            question: "Most impressed team through batting",
+            options: ["CSK", "PBKS", "SRH", "MI"],
+            answer: 2
+        }, {
+            question: "Most destructive opening pair in IPL 2024",
+            options: ["Virat and FAF", "Sunil Narine and Salt", "Head and Abhishek", "Buttler and Jaishwal"],
+            answer: 2
+        }, {
+            question: "Best comeback team in IPL 2024",
+            options: ["RCB", "MI", "CSK", "PBKS"],
+            answer: 1
+        }];
+
+        function start() {
+            let currentQuestion = 0;
+            let score = 0;
+
+            const questionEl = document.getElementById('question');
+            const optionsEl = document.getElementById('options');
+            const resultEl = document.getElementById('result');
+            const scoreEl = document.getElementById('score');
+
+            function loadQuestion() {
+                const currentQuiz = quizData[currentQuestion];
+                questionEl.textContent = currentQuiz.question;
+                optionsEl.innerHTML = '';
+
+                currentQuiz.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.onclick = () => selectOption(index);
+                    const li = document.createElement('li');
+                    li.appendChild(button);
+                    optionsEl.appendChild(li);
+                });
+            }
+
+            function selectOption(selectedIndex) {
+                if (selectedIndex === quizData[currentQuestion].answer) {
+                    score++;
+                }
+                currentQuestion++;
+
+                if (currentQuestion < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            }
+
+            function showResult() {
+                document.querySelector('.quiz').style.display = 'none';
+                resultEl.style.display = 'block';
+                scoreEl.textContent = score;
+            }
+
+            loadQuestion();
+        }
+    </script>
+</body>
+
+</html>
